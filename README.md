@@ -7,7 +7,7 @@ pip install jcaptcha
 
 ## django view中使用
 
-``
+```
 from jcaptcha.VerificationCode import jcaptcha
 
 def create_code(request):
