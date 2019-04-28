@@ -6,7 +6,7 @@ from setuptools import setup, find_packages, Extension
 
 setup(
     name='jcaptcha',
-      version='1.0.2',
+      version='1.0.3',
       description='验证码生成',
       url='https://github.com/xiaofeng283/jcaptcha',
       author='Jervon',

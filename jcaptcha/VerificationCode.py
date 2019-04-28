@@ -21,10 +21,14 @@ DATA_DIR = "{base_dir}/data".format(base_dir=BASE_DIR)
 
 
 class jCaptcha(object):
+    language = "zh" # 默认显示中文
+
     def __init__(self):
         pass
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, language=None, *args, **kwargs):
+        if language:
+            self.language = language
         return self.get_captcha_image()
 
     def random_captcha_text(self, char_set=number + alphabet + Alphabet, captcha_size=4):
@@ -50,10 +54,10 @@ class jCaptcha(object):
         :return:
         """
         captcha_type_dict = {
-            1: {"symbol": "+", "desc": "加"},
-            2: {"symbol": "-", "desc": "减"},
-            3: {"symbol": "*", "desc": "乘"},
-            4: {"symbol": "/", "desc": "除"},
+            1: {"symbol": "+", "desc": "加", "zh_name": "加", "en_name": "+"},
+            2: {"symbol": "-", "desc": "减", "zh_name": "减", "en_name": "-"},
+            3: {"symbol": "*", "desc": "乘", "zh_name": "乘", "en_name": "*"},
+            4: {"symbol": "/", "desc": "除", "zh_name": "除", "en_name": "/"},
         }
 
         if captcha_size in (2, ) and is_random_lenth: captcha_size += 3-captcha_size
@@ -63,7 +67,7 @@ class jCaptcha(object):
         a = "".join(a)
         b = "".join(b)
         expression_symbol = "{a} {captcha_type} {b}".format(a=a,b=b,captcha_type=captcha_type_dict[captcha_type]["symbol"])
-        expression_desc = "{a} {captcha_type} {b}".format(a=a,b=b,captcha_type=captcha_type_dict[captcha_type]["desc"])
+        expression_desc = "{a} {captcha_type} {b}".format(a=a,b=b,captcha_type=captcha_type_dict[captcha_type]["{}_name".format(self.language)])
         expression_result = eval(expression_symbol)
         # expression = expression + "=?"
         return expression_desc, expression_result
